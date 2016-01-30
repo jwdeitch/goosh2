@@ -22,7 +22,7 @@ input:focus {
 }
 
 .label {
-    color: #525252;
+    color: rgba(82, 82, 82, 0.77);
     padding-right: 5px;
 }
 
@@ -46,8 +46,26 @@ hr {
     height: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 650px;
+    margin-left: 10px;
 }
 
 .helpMenu {
     display: none;
+}
+
+.index {
+    float: left;
+    padding-left: 10px;
+}
+
+.main {
+    width: 95%;
+    float: right;
+}
+
+.result:after {
+    content: '';
+    display: block;
+    clear: both;
 }
