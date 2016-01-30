@@ -13,6 +13,13 @@ $(document).ready(function () {
                 case 'clear':
                     var me = $(this).parent().parent();
                     $('body').html(me);
+                    $(this).val('');
+                    $(this).focus();
+                    break;
+                case 'h':
+                case 'help':
+                    addResult('Hello');
+                    clearField($(this));
                     break;
                 default:
                     callGoogle($(this));
@@ -36,10 +43,7 @@ $(document).ready(function () {
                     addResult('No results');
                 }
 
-                var needRetaining = q.val();
-                $('body').append(q.val('').parent().parent().clone());
-                q.parent().html(needRetaining);
-                $('input').focus();
+                clearField(q);
             })
             .fail(function () {
                 alert("error");
@@ -48,5 +52,12 @@ $(document).ready(function () {
 
     function addResult(r) {
         return $('body').append('<div class="result">' + r + '</div>');
+    }
+
+    function clearField(input) {
+        var needRetaining = input.val();
+        $('body').append(input.val('').parent().parent().clone());
+        input.parent().html(needRetaining);
+        $('input').focus();
     }
 });
