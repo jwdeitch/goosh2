@@ -1,0 +1,47 @@
+body {
+    font-family: monospace;
+    font-size: 1.3em;
+}
+input {
+    border: none;
+    width: 100%;
+    font-size: 0.7em;
+}
+
+input:focus {
+    outline: none;
+}
+
+.queryInput {
+    display: flex;
+}
+
+.input {
+    width: 100%;
+}
+
+.label {
+    color: #525252;
+    padding-right: 5px;
+}
+
+.result {
+    margin: 5px;
+}
+
+.result .title {
+    color: blue;
+    font-weight: bold;
+}
+
+.result .link {
+    color: green;
+}
+
+/* Inset, by Dan Eden */
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
