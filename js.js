@@ -12,13 +12,13 @@ $(document).ready(function () {
                 case 'c':
                 case 'clear':
                     var me = $(this).parent().parent();
-                    $('body').html(me);
+                    $('.gsh').html(me);
                     $(this).val('');
                     $(this).focus();
                     break;
                 case 'h':
                 case 'help':
-                    addResult('Hello');
+                    addResult($('.helpMenu').html());
                     clearField($(this));
                     break;
                 default:
@@ -36,7 +36,7 @@ $(document).ready(function () {
             .done(function (data) {
                 if (typeof data['items'] !== 'undefined') {
                     data['items'].forEach(function (item) {
-                        $('body').append('' +
+                        $('.gsh').append('' +
                             '<div class="result"><div class="title"><a href="'+ item.link +'">' + item.title + '</a></div><div class="snippet">' + item.snippet + '</div><div class="link">' + item.link + '</div></div><hr>');
                     });
                 } else {
@@ -46,17 +46,18 @@ $(document).ready(function () {
                 clearField(q);
             })
             .fail(function () {
-                alert("error");
+                addResult('Error - Perhaps too many searches? (max 100/person/day)');
+                clearField(q);
             })
     }
 
     function addResult(r) {
-        return $('body').append('<div class="result">' + r + '</div>');
+        return $('.gsh').append('<div class="result">' + r + '</div>');
     }
 
     function clearField(input) {
         var needRetaining = input.val();
-        $('body').append(input.val('').parent().parent().clone());
+        $('.gsh').append(input.val('').parent().parent().clone());
         input.parent().html(needRetaining);
         $('input').focus();
     }

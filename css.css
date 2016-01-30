@@ -5,7 +5,8 @@ body {
 input {
     border: none;
     width: 100%;
-    font-size: 0.7em;
+    font-size: 1.0em;
+    font-family: monospace;
 }
 
 input:focus {
@@ -27,6 +28,7 @@ input:focus {
 
 .result {
     margin: 5px;
+    max-width: 650px;
 }
 
 .result .title {
@@ -44,4 +46,8 @@ hr {
     height: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.helpMenu {
+    display: none;
 }
