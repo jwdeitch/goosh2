@@ -44,8 +44,15 @@ $(document).ready(function () {
                 $(this).val(Qhistory[Qhistory.length - historyCounter - 1]);
                 historyCounter++;
             } else {
-                $(this).val(Qhistory[Qhistory.length - historyCounter - 1]);
+                $(this).val(Qhistory[Qhistory.length - historyCounter]);
+            }
+        }
+        if (e.which == 40) {
+            if (Qhistory[historyCounter - 1]) {
                 historyCounter--;
+                $(this).val(Qhistory[Qhistory.length - historyCounter - 1]);
+            } else {
+                $(this).val('');
             }
         }
     });
