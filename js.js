@@ -11,6 +11,7 @@ $(document).ready(function () {
 
     $('body').on("keydown", '#queryInputTb', function (e) {
         if (e.which == 13 && $(this).val() !== "") {
+            historyCounter = 0;
             var Qvalue = $(this).val();
             if (parseInt(Qvalue) && responseObj[Qvalue]) {
                 var win = window.open(responseObj[Qvalue - 1], '_blank', "");

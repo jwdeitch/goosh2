@@ -69,3 +69,8 @@ hr {
     display: block;
     clear: both;
 }
+
+.blue {
+    color: #5a6ba1;
+    display: inline;
+}
