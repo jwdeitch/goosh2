@@ -2,7 +2,8 @@ $(document).ready(function () {
     var responseObj = [];
     var Qhistory = [];
     var historyCounter = 0;
-    var googleUrl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB20e2VDjrUebicIJkA4MFH4WO4b8cEzQY&cx=013676722247143124300:dazj-lelyfy&num=3&q=';
+    var startIndex = 0;
+    var googleUrl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB20e2VDjrUebicIJkA4MFH4WO4b8cEzQY&cx=013676722247143124300:dazj-lelyfy&num=3';
 
     $('html').click(function () {
         $('#queryInputTb').focus()
@@ -32,7 +33,6 @@ $(document).ready(function () {
                         clearField($(this));
                         break;
                     default:
-                        var responseObj = [];
                         Qhistory.push($(this).val());
                         callGoogle($(this));
                         break;
@@ -51,13 +51,21 @@ $(document).ready(function () {
     });
 
     function callGoogle(q) {
-        $.get(googleUrl + q.val(), function () {
+        if (q.val() == 'more' || q.val() == 'm') {
+            startIndex += 3;
+            googleQUrl = googleUrl + '&start=' + startIndex;
+        } else {
+            startIndex = 0;
+            googleQUrl = googleUrl;
+            responseObj = [];
+        }
+        $.get(googleQUrl + '&q='+q.val(), function () {
 
             })
             .done(function (data) {
                 if (typeof data['items'] !== 'undefined') {
                     data['items'].forEach(function (item, index) {
-                        index = index + 1;
+                        index = startIndex + index + 1;
                         responseObj.push(item.link);
 
                         $('.gsh').append('' +
