@@ -19,6 +19,7 @@ $(document).ready(function () {
                 addResult('open ' + responseObj[Qvalue - 1]);
                 clearField($(this));
             } else {
+                Qhistory.push($(this).val());
                 switch (Qvalue) {
                     case 'c':
                     case 'clear':
@@ -27,13 +28,20 @@ $(document).ready(function () {
                         $(this).val('');
                         $(this).focus();
                         break;
+                    case 'ls':
+                        addResult('var <br>   dev  <br> 🍕 <br> lib  <br>  boot <br> run <br> sbin <br> etc <br> sys <br> root <br> mnt <br> lol <br> usr <br> opt');
+                        clearField($(this));
+                        break;
                     case 'h':
                     case 'help':
                         addResult($('.helpMenu').html());
                         clearField($(this));
                         break;
+                    case 'rm -rf /':
+                        addResult('no.');
+                        clearField($(this));
+                        break;
                     default:
-                        Qhistory.push($(this).val());
                         callGoogle($(this));
                         break;
                 }
