@@ -1,5 +1,7 @@
 $(document).ready(function () {
     var responseObj = [];
+    var Qhistory = [];
+    var historyCounter = 0;
     var googleUrl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB20e2VDjrUebicIJkA4MFH4WO4b8cEzQY&cx=013676722247143124300:dazj-lelyfy&num=3&q=';
 
     $('html').click(function () {
@@ -10,30 +12,40 @@ $(document).ready(function () {
         if (e.which == 13 && $(this).val() !== "") {
             var Qvalue = $(this).val();
             if (parseInt(Qvalue) && responseObj[Qvalue]) {
-                var win = window.open(responseObj.Qvalue, 'result');
+                var win = window.open(responseObj[Qvalue - 1], '_blank', "");
                 win.focus();
 
-                addResult(Qvalue);
-                clearField();
+                addResult('open ' + responseObj[Qvalue - 1]);
+                clearField($(this));
+            } else {
+                switch (Qvalue) {
+                    case 'c':
+                    case 'clear':
+                        var me = $(this).parent().parent();
+                        $('.gsh').html(me);
+                        $(this).val('');
+                        $(this).focus();
+                        break;
+                    case 'h':
+                    case 'help':
+                        addResult($('.helpMenu').html());
+                        clearField($(this));
+                        break;
+                    default:
+                        var responseObj = [];
+                        Qhistory.push($(this).val());
+                        callGoogle($(this));
+                        break;
+                }
             }
-
-
-            switch (Qvalue) {
-                case 'c':
-                case 'clear':
-                    var me = $(this).parent().parent();
-                    $('.gsh').html(me);
-                    $(this).val('');
-                    $(this).focus();
-                    break;
-                case 'h':
-                case 'help':
-                    addResult($('.helpMenu').html());
-                    clearField($(this));
-                    break;
-                default:
-                    callGoogle($(this));
-                    break;
+        }
+        if (e.which == 38) {
+            if (Qhistory[historyCounter]) {
+                $(this).val(Qhistory[Qhistory.length - historyCounter - 1]);
+                historyCounter++;
+            } else {
+                $(this).val(Qhistory[Qhistory.length - historyCounter - 1]);
+                historyCounter--;
             }
         }
     });
@@ -49,7 +61,7 @@ $(document).ready(function () {
                         responseObj.push(item.link);
 
                         $('.gsh').append('' +
-                            '<div class="result"><div class="index">'+index+'</div><div class="main"><div class="title"><a href="'+ item.link +'">' + item.title + '</a></div><div class="snippet">' + item.snippet + '</div><div class="link">' + item.link + '</div></div></div><hr>');
+                            '<div class="result"><div class="index">' + index + '</div><div class="main"><div class="title"><a href="' + item.link + '">' + item.title + '</a></div><div class="snippet">' + item.snippet + '</div><div class="link">' + item.link + '</div></div></div><hr>');
                     });
                 } else {
                     addResult('No results');
