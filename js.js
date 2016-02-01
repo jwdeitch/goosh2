@@ -6,6 +6,7 @@ $(document).ready(function () {
     var googleUrl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB20e2VDjrUebicIJkA4MFH4WO4b8cEzQY&cx=013676722247143124300:dazj-lelyfy&num=3';
     var wramalphaUrl = 'https://2ylflv45i7.execute-api.us-west-2.amazonaws.com/prod/WolframalphaQuery?input=';
     var prevQuery = '';
+    var theme = 'w';
     $('html').click(function () {
         $('#queryInputTb').focus()
     });
@@ -23,23 +24,8 @@ $(document).ready(function () {
             } else if (Qvalue.indexOf('w ') === 0) {
                 callWRamAlpha($(this));
             } else if (Qvalue.indexOf('theme ') === 0) {
-                var theme = Qvalue.split(" ")[1];
-
-                switch (theme) {
-                    case 'l':
-                        $('html').css({"background-color": "#FCF6E2"});
-                        $('.title').css({"color":"#3988D5"});
-                        $('.result .link').css({"color":"#C75004"});
-                        $('body').css({"color":"#667B84"});
-                        $('input').css({"background-color":"#FCF6E2"});
-                        break;
-                    case 'w':
-                        break;
-                    case 'd':
-                        break;
-                }
-
-                addResult('color scheme changed: ' + theme);
+                theme = Qvalue.split(" ")[1];
+                changeTheme(theme);
                 clearField($(this));
             }else {
                 Qhistory.push($(this).val());
@@ -177,7 +163,35 @@ $(document).ready(function () {
             clearInterval(timer);
         }
     }
-
-
+    function changeTheme(theme) {
+        switch (theme) {
+            case 'l':
+                $('html').css({"background-color": "#FCF6E2"});
+                $('a').css({"color":"#3988D5"});
+                $('.result .link').css({"color":"#C75004"});
+                $('body').css({"color":"#667B84"});
+                $('input').css({"background-color":"#FCF6E2"});
+                addResult('color scheme changed: light');
+                break;
+            case 'w':
+                $('html').css({"background-color": ""});
+                $('a').css({"color":""});
+                $('.result .link').css({"color":""});
+                $('body').css({"color":""});
+                $('.label').css({"color":""});
+                $('input').css({"background-color":"", "color":""});
+                addResult('color scheme changed: white');
+                break;
+            case 'd':
+                $('html').css({"background-color": "#043643"});
+                $('a').css({"color":"#1C8AD5"});
+                $('.result .link').css({"color":"#B68A00"});
+                $('body').css({"color":"#93A1A1"});
+                $('.label').css({"color":"#93A1A1"});
+                $('input').css({"background-color":"#043643", "color":"#93A1A1"});
+                addResult('color scheme changed: dark');
+                break;
+        }
+    }
 
 });
