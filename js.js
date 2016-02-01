@@ -17,7 +17,7 @@ $(document).ready(function () {
 
             historyCounter = 0;
             var Qvalue = $(this).val();
-            if (parseInt(Qvalue) && responseObj[Qvalue]) {
+            if (parseInt(Qvalue) && responseObj[Qvalue-1]) {
                 var win = window.open(responseObj[Qvalue - 1], '_blank', "");
                 win.focus();
 
