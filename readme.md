@@ -1,4 +1,6 @@
 ### Gsh
 ####Google web shell
 
-Heavily inspired by [Goosh](https://code.google.com/archive/p/goosh/)
+A jquery copy of [Goosh](https://code.google.com/archive/p/goosh/)
+
+Uses AWS lambda function (via API gateway) to query wolframalpha API
