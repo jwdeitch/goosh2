@@ -13,6 +13,8 @@ $(document).ready(function () {
 
     $('body').on("keydown", '#queryInputTb', function (e) {
         if (e.which == 13 && $(this).val() !== "") {
+            Qhistory.push($(this).val());
+
             historyCounter = 0;
             var Qvalue = $(this).val();
             if (parseInt(Qvalue) && responseObj[Qvalue]) {
@@ -28,7 +30,6 @@ $(document).ready(function () {
                 changeTheme(theme);
                 clearField($(this));
             }else {
-                Qhistory.push($(this).val());
                 switch (Qvalue) {
                     case 'c':
                     case 'clear':
