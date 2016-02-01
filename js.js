@@ -4,7 +4,7 @@ $(document).ready(function () {
     var historyCounter = 0;
     var startIndex = 0;
     var googleUrl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB20e2VDjrUebicIJkA4MFH4WO4b8cEzQY&cx=013676722247143124300:dazj-lelyfy&num=3';
-
+    var wramalphaUrl = 'https://2ylflv45i7.execute-api.us-west-2.amazonaws.com/prod/WolframalphaQuery?input=';
     $('html').click(function () {
         $('#queryInputTb').focus()
     });
@@ -19,6 +19,8 @@ $(document).ready(function () {
 
                 addResult('open ' + responseObj[Qvalue - 1]);
                 clearField($(this));
+            } else if (Qvalue.indexOf('w ') === 0) {
+                callWRamAlpha($(this));
             } else {
                 Qhistory.push($(this).val());
                 switch (Qvalue) {
@@ -41,16 +43,6 @@ $(document).ready(function () {
                     case 'rm -rf /':
                         addResult('no.');
                         clearField($(this));
-                        break;
-                    case 'w':
-                        $.get('https://2ylflv45i7.execute-api.us-west-2.amazonaws.com/prod/helloBEC?input=wefwef', function () {
-
-                            })
-                            .done(function (data) {
-                                console.log(data);
-                            })
-                            .fail(function () {
-                            });
                         break;
                     default:
                         callGoogle($(this));
@@ -111,6 +103,27 @@ $(document).ready(function () {
 
     function addResult(r) {
         return $('.gsh').append('<div class="result">' + r + '</div>');
+    }
+
+    function callWRamAlpha(q) {
+        query = q.val().replace("w ", "");
+        $.get(wramalphaUrl + query, function () {
+
+            })
+            .done(function (data) {
+
+                if (typeof data !== 'undefined' || data == 'error') {
+                        $('.gsh').append('<img src="'+data+'">');
+                } else {
+                    addResult('No results');
+                }
+
+                clearField(q);
+            })
+            .fail(function () {
+                addResult('Error - Perhaps too many searches? (max 100/person/day)');
+                clearField(q);
+            })
     }
 
     function clearField(input) {
