@@ -22,7 +22,26 @@ $(document).ready(function () {
                 clearField($(this));
             } else if (Qvalue.indexOf('w ') === 0) {
                 callWRamAlpha($(this));
-            } else {
+            } else if (Qvalue.indexOf('theme ') === 0) {
+                var theme = Qvalue.split(" ")[1];
+
+                switch (theme) {
+                    case 'l':
+                        $('html').css({"background-color": "#FCF6E2"});
+                        $('.title').css({"color":"#3988D5"});
+                        $('.result .link').css({"color":"#C75004"});
+                        $('body').css({"color":"#667B84"});
+                        $('input').css({"background-color":"#FCF6E2"});
+                        break;
+                    case 'w':
+                        break;
+                    case 'd':
+                        break;
+                }
+
+                addResult('color scheme changed: ' + theme);
+                clearField($(this));
+            }else {
                 Qhistory.push($(this).val());
                 switch (Qvalue) {
                     case 'c':
@@ -145,7 +164,7 @@ $(document).ready(function () {
     }
 
 
-
+    // Thanks to this dude on stack overflow: http://stackoverflow.com/a/3219113 !!
     function Loader() {
         $('.gsh').append('<div class="result loader"></div>');
         var chars = "|/-\\".split("");
