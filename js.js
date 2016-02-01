@@ -112,8 +112,10 @@ $(document).ready(function () {
             })
             .done(function (data) {
 
-                if (typeof data !== 'undefined' || data == 'error') {
-                        $('.gsh').append('<img src="'+data+'">');
+                if (typeof data !== 'undefined' && data !== "error") {
+                    data.forEach(function (item) {
+                        $('.gsh').append('<img src="' + item + '"><br>');
+                    });
                 } else {
                     addResult('No results');
                 }
