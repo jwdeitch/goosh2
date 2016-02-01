@@ -42,6 +42,16 @@ $(document).ready(function () {
                         addResult('no.');
                         clearField($(this));
                         break;
+                    case 'w':
+                        $.get('https://2ylflv45i7.execute-api.us-west-2.amazonaws.com/prod/helloBEC?input=wefwef', function () {
+
+                            })
+                            .done(function (data) {
+                                console.log(data);
+                            })
+                            .fail(function () {
+                            });
+                        break;
                     default:
                         callGoogle($(this));
                         break;
