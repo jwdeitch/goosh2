@@ -69,6 +69,7 @@ $(document).ready(function () {
     });
 
     function callGoogle(q) {
+        var loader = new Loader();
         if (q.val() == 'more' || q.val() == 'm') {
             startIndex += 3;
             googleQUrl = googleUrl + '&start=' + startIndex;
@@ -94,11 +95,13 @@ $(document).ready(function () {
                 }
 
                 clearField(q);
+                $('.gsh').children().remove('.loader');
             })
             .fail(function () {
                 addResult('Error - Perhaps too many searches? (max 100/person/day)');
                 clearField(q);
-            })
+                $('.gsh').children().remove('.loader');
+            });
     }
 
     function addResult(r) {
@@ -106,6 +109,7 @@ $(document).ready(function () {
     }
 
     function callWRamAlpha(q) {
+        var loader = new Loader();
         query = q.val().replace("w ", "");
         $.get(wramalphaUrl + query, function () {
 
@@ -121,11 +125,13 @@ $(document).ready(function () {
                 }
 
                 clearField(q);
+                $('.gsh').children().remove('.loader');
             })
             .fail(function () {
                 addResult('Error - Perhaps too many searches? (max 100/person/day)');
                 clearField(q);
-            })
+                $('.gsh').children().remove('.loader');
+            });
     }
 
     function clearField(input) {
@@ -134,4 +140,22 @@ $(document).ready(function () {
         input.parent().html(needRetaining);
         $('input').focus();
     }
+
+
+
+    function Loader() {
+        $('.gsh').append('<div class="result loader"></div>');
+        var chars = "|/-\\".split("");
+        var i = 0;
+        var timer = setInterval(function(){
+            $('.loader').html(chars[ i++ % chars.length ]);
+        }, 100);
+        // public method to stop the animation
+        this.stop = function() {
+            clearInterval(timer);
+        }
+    }
+
+
+
 });
