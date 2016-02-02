@@ -84,6 +84,7 @@ $(document).ready(function () {
 
     function callGoogle(q) {
         var loader = new Loader();
+        searchType = 'text';
         if ((q.val() == 'more' || q.val() == 'm') && prevQuery.length !== 0) {
             startIndex += 3;
             googleQUrl = googleUrl + '&start=' + startIndex + 1;
@@ -94,31 +95,41 @@ $(document).ready(function () {
             responseObj = [];
             prevQuery = q.val();
         }
-        $.get(googleQUrl + '&q='+q.val(), function () {
+        if (q.val().indexOf('i ') === 0) {
+            var imageQ = q.val().split(" ")[1];
+            //startIndex = 0;
+            searchType = 'image';
+            prevQuery = q.val();
+        }
+        if (searchType === 'image') {
+            googleImageQuery(googleQUrl + '&q='+imageQ,q);
+        } else {
+            $.get(googleQUrl + '&q=' + q.val(), function () {
 
-            })
-            .done(function (data) {
-                if (typeof data['items'] !== 'undefined') {
-                    data['items'].forEach(function (item, index) {
-                        index = startIndex + index + 1;
-                        responseObj.push(item.link);
+                })
+                .done(function (data) {
+                    if (typeof data['items'] !== 'undefined') {
+                        data['items'].forEach(function (item, index) {
+                            index = startIndex + index + 1;
+                            responseObj.push(item.link);
 
-                        $('.gsh').append('' +
-                            '<div class="result"><div class="index">' + index + '</div><div class="main"><div class="title"><a href="' + item.link + '">' + item.title + '</a></div><div class="snippet">' + item.snippet + '</div><div class="link">' + item.link + '</div></div></div><hr>');
-                    });
-                } else {
-                    addResult('No results');
-                }
+                            $('.gsh').append('' +
+                                '<div class="result"><div class="index">' + index + '</div><div class="main"><div class="title"><a href="' + item.link + '">' + item.title + '</a></div><div class="snippet">' + item.snippet + '</div><div class="link">' + item.link + '</div></div></div><hr>');
+                        });
+                    } else {
+                        addResult('No results');
+                    }
 
-                clearField(q);
-                $('.gsh').children().remove('.loader');
-                changeTheme(theme);
-            })
-            .fail(function () {
-                addResult('Error - Perhaps too many searches? (max 100/person/day)');
-                clearField(q);
-                $('.gsh').children().remove('.loader');
-            });
+                    clearField(q);
+                    $('.gsh').children().remove('.loader');
+                    changeTheme(theme);
+                })
+                .fail(function () {
+                    addResult('Error - Perhaps too many searches? (max 100/person/day)');
+                    clearField(q);
+                    $('.gsh').children().remove('.loader');
+                });
+        }
     }
 
     function addResult(r) {
@@ -201,6 +212,36 @@ $(document).ready(function () {
                 //addResult('color scheme changed: dark');
                 break;
         }
+    }
+
+    function googleImageQuery(query,q) {
+        $.get(query, function () {
+
+            })
+            .done(function (data) {
+                if (typeof data['items'] !== 'undefined') {
+                    data['items'].forEach(function (item, index) {
+                        if (typeof item['pagemap']['cse_thumbnail'] !== 'undefined') {
+                            index = startIndex + index + 1;
+                            item = item['pagemap']['cse_thumbnail'][0];
+                            responseObj.push(item.link);
+
+                            $('.gsh').append('<div class="result img"><img src="' + item.src + '"></div>')
+                        }
+                    });
+                } else {
+                    addResult('No results');
+                }
+
+                clearField(q);
+                $('.gsh').children().remove('.loader');
+                changeTheme(theme);
+            })
+            .fail(function () {
+                addResult('Error - Perhaps too many searches? (max 100/person/day)');
+                clearField(q);
+                $('.gsh').children().remove('.loader');
+            });
     }
 
 });
