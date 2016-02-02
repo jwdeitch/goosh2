@@ -24,7 +24,14 @@ $(document).ready(function () {
             var Qvalue = $(this).val();
             if (parseInt(Qvalue) && responseObj[Qvalue-1]) {
                 var win = window.open(responseObj[Qvalue - 1], '_blank', "");
-                win.focus();
+
+                if(!win || typeof win.closed=='undefined')
+                {
+                    addResult('Please disable popups to open links in a new tab');
+                } else {
+                    win.focus();
+                }
+
 
                 addResult('open ' + responseObj[Qvalue - 1]);
                 clearField($(this));
