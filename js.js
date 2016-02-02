@@ -221,7 +221,7 @@ $(document).ready(function () {
             .done(function (data) {
                 if (typeof data['items'] !== 'undefined') {
                     data['items'].forEach(function (item, index) {
-                        if (typeof item['pagemap']['cse_thumbnail'] !== 'undefined') {
+                        if (typeof item['pagemap'] !== 'undefined' && typeof item['pagemap']['cse_thumbnail'] !== 'undefined') {
                             index = startIndex + index + 1;
                             item = item['pagemap']['cse_thumbnail'][0];
                             responseObj.push(item.link);
