@@ -7,6 +7,11 @@ $(document).ready(function () {
     var wramalphaUrl = 'https://2ylflv45i7.execute-api.us-west-2.amazonaws.com/prod/WolframalphaQuery?input=';
     var prevQuery = '';
     var theme = 'w';
+    if (localStorage.getItem("theme")) {
+        theme = localStorage.getItem("theme");
+        changeTheme(theme);
+    }
+
     $('html').click(function () {
         $('#queryInputTb').focus()
     });
@@ -28,6 +33,8 @@ $(document).ready(function () {
             } else if (Qvalue.indexOf('theme ') === 0) {
                 theme = Qvalue.split(" ")[1];
                 changeTheme(theme);
+                localStorage.setItem('theme',theme);
+                addResult('Changed theme to' + theme);
                 clearField($(this));
             }else {
                 switch (Qvalue) {
@@ -105,6 +112,7 @@ $(document).ready(function () {
 
                 clearField(q);
                 $('.gsh').children().remove('.loader');
+                changeTheme(theme);
             })
             .fail(function () {
                 addResult('Error - Perhaps too many searches? (max 100/person/day)');
@@ -172,7 +180,7 @@ $(document).ready(function () {
                 $('.result .link').css({"color":"#C75004"});
                 $('body').css({"color":"#667B84"});
                 $('input').css({"background-color":"#FCF6E2"});
-                addResult('color scheme changed: light');
+                //addResult('color scheme changed: light');
                 break;
             case 'w':
                 $('html').css({"background-color": ""});
@@ -181,7 +189,7 @@ $(document).ready(function () {
                 $('body').css({"color":""});
                 $('.label').css({"color":""});
                 $('input').css({"background-color":"", "color":""});
-                addResult('color scheme changed: white');
+                //addResult('color scheme changed: white');
                 break;
             case 'd':
                 $('html').css({"background-color": "#043643"});
@@ -190,7 +198,7 @@ $(document).ready(function () {
                 $('body').css({"color":"#93A1A1"});
                 $('.label').css({"color":"#93A1A1"});
                 $('input').css({"background-color":"#043643", "color":"#93A1A1"});
-                addResult('color scheme changed: dark');
+                //addResult('color scheme changed: dark');
                 break;
         }
     }
