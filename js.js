@@ -34,7 +34,7 @@ $(document).ready(function () {
                 theme = Qvalue.split(" ")[1];
                 changeTheme(theme);
                 localStorage.setItem('theme',theme);
-                addResult('Changed theme to' + theme);
+                addResult('Changed theme to ' + theme);
                 clearField($(this));
             }else {
                 switch (Qvalue) {
