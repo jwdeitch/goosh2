@@ -146,7 +146,7 @@ $(document).ready(function () {
     function callWRamAlpha(q) {
         var loader = new Loader();
         query = q.val().replace("w ", "");
-        $.get(wramalphaUrl + query, function () {
+        $.get(wramalphaUrl + encodeURIComponent(query), function () {
 
             })
             .done(function (data) {
