@@ -3,7 +3,7 @@ $(document).ready(function () {
     var Qhistory = [];
     var historyCounter = 0;
     var startIndex = 0;
-    var googleUrl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB20e2VDjrUebicIJkA4MFH4WO4b8cEzQY&cx=013676722247143124300:dazj-lelyfy&num=3';
+    var googleUrl = 'https://www.googleapis.com/customsearch/v1?key=(use-your-own-key-pls)&cx=013676722247143124300:dazj-lelyfy&num=3';
     var wramalphaUrl = 'https://2ylflv45i7.execute-api.us-west-2.amazonaws.com/prod/WolframalphaQuery?input=';
     var prevQuery = '';
     var theme = 'w';
